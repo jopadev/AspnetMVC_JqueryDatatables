@@ -1,0 +1,21 @@
+﻿@using (Html.BeginForm("Delete", "Livros", FormMethod.Post, null))
+{
+    @Html.AntiForgeryToken()
+    <div class="modal" tabindex="-1" role="dialog" id="ModalExclusao">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirmação de Exclusão</h5>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="id" name="id" />
+                    <div id="conteudoModalExclusao"> </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"> <i class="glyphicon glyphicon-ban-circle"></i> Cancelar</button>
+                    <button type="submit" class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i> Confirmar Exclusão</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}

@@ -1,0 +1,87 @@
+﻿@model IEnumerable<CRUD_EntityFramework.Models.Livro>
+@{
+    ViewBag.Title = "Index";
+}
+
+<header class="panel_header p-t-10 p-r-10">
+    <h2 class="title pull-left">Lista de Livros</h2>
+    <div class="actions panel_actions pull-right">
+        <a href="@Url.Action("Adicionar", "Livros", new {area=""})" class="btn btn-primary">
+            <i class="glyphicon glyphicon-plus"></i> Novo Livro
+        </a>
+    </div>
+</header>
+<div class="content-body">
+    <div class="table-responsive" style="overflow-y: hidden; overflow-x: hidden; ">
+        <table class="table table-bordered table-condensed custom-table" id="tabelaLivros" width="100%">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Número da Edicao</th>
+                    <th>Autor</th>
+                    <th>Editora</th>
+                    <th>Preço de Venda</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>
+<footer class="panel_footer">
+    <div class="actions panel_actions">
+    </div>
+    @Html.Partial("_ModalExclusao")
+</footer>
+
+@section scripts
+{
+    <script src="~/Scripts/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/dataTables.bootstrap.min.js"></script>
+    <script type="text/javascript">
+
+
+
+        DemoDatatable();
+        function DemoDatatable() {
+            $("#tabelaLivros").DataTable({
+                "processing": true,
+                "serverSide": true,
+                "filter": true,
+                "orderMulti": false,
+                "destroy": true,
+                "ordering": true,
+                "ajax": {
+                    "url": '/Livros/ObterListaLivros',
+                    "type": "POST",
+                    "datatype": "json"
+                },
+                "columns": [
+                    { "data": "Nome", "Name": "Nome", "autoWidth": true },
+                    { "data": "NumeroEdicao", "Name": "NumeroEdicao", "autoWidth": true },
+                    { "data": "Autor", "name": "Autor", "autoWidth": true },
+                    { "data": "PrecoVenda", "name": "PrecoVenda", "autoWidth": true },
+                    { "data": "Editora", "name": "Editora", "autoWidth": true },
+                    {
+                        "data": '',
+                        render: (data, type, row) => {
+                            var controls = `<a href='/Livros/Editar/${row.LivroId}' class="btn btn-sm btn-primary"><i class="glyphicon glyphicon-pencil"></i> Editar</a>`;
+                            controls += `<a class="btn btn-sm btn-danger delete" onclick='fnDelete("${row.LivroId}","Deseja realmente excluir o livro :<b> ${row.Nome}</b>?")'"><i class="glyphicon glyphicon-trash"></i> Excluir</a>`;
+
+                            return controls;
+                        }
+                    }
+                ]
+            });
+        }
+
+        function fnDelete(id, texto) {
+            $("#id").val(id)
+            $("#conteudoModalExclusao").empty();
+            $("#conteudoModalExclusao").append(texto);
+            $('#ModalExclusao').modal('show');
+        }
+
+    </script>
+}

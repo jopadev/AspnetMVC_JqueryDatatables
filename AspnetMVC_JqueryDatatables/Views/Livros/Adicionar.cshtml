@@ -1,0 +1,100 @@
+﻿@model CRUD_EntityFramework.Models.Livro
+
+@using (Html.BeginForm("adicionar", "livros", FormMethod.Post, new { @class = "" }))
+{
+<header class="panel_header">
+    <h2 class="title pull-left">Cadastro de Novo Livro</h2>
+    <div class="actions panel_actions pull-right">
+        <i class="box_toggle fa fa-chevron-down"></i>
+        <i class="box_setting fa fa-cog" data-toggle="modal" href="#section-settings"></i>
+        <i class="box_close fa fa-times"></i>
+    </div>
+    @Html.AntiForgeryToken()
+</header>
+    <div class="content-body">
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label class="form-label" for="field-1">Nome</label>
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.Nome, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group col-md-6">
+                <label class="form-label" for="field-1">Autor</label>
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.Autor, new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-8">
+                <label class="form-label" for="field-1">Editora</label>
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.Editora, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group col-md-4">
+                <label class="form-label" for="field-1">Número de Edição</label>
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.NumeroEdicao, new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-4">
+                <label class="form-label" for="field-1">Número do Exemplar</label>
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.NumeroEdicao, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group col-md-4">
+                <label class="form-label" for="field-1">Condição (Estado do Livro)</label>
+                <div class="controls">
+                    @Html.DropDownListFor(m => m.CondicaoLivroId, ViewData["CondicoesLivros"] as SelectList, "<<selecione uma opção>>", htmlAttributes: new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group col-md-4">
+                <label class="form-label" for="field-1">Preço de Venda</label>
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.PrecoVenda, new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-8">
+                <label class="form-label" for="field-1">Observações</label>
+                <div class="controls">
+                    @Html.TextAreaFor(m => m.Observacao, new { @class = "form-control", @rows = 10 })
+                </div>
+            </div>
+            <div class="form-group col-md-4">
+                <label class="form-label" for="field-1">Livro Disponível pra venda</label>
+                <div class="controls">
+                    <div class="col-md-12">
+                        <label class="radio">
+                            @Html.RadioButtonFor(model => model.DisponivelPraVenda, true)
+                            Sim
+                        </label>
+                        <label class="radio">
+                            @Html.RadioButtonFor(model => model.DisponivelPraVenda, false)
+                            Não
+                        </label>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="panel_footer">
+        <div class="actions panel_actions pull-left">
+            <button type="submit" class="btn btn-primary">
+                <i class="glyphicon glyphicon-floppy-disk"></i>  Salvar
+            </button>
+
+            <a href="@Url.Action("index","livros",new { area = "" })" class="btn btn-secondary">
+                <i class="glyphicon glyphicon-ban-circle"></i>  Cancelar
+            </a>
+        </div>
+    </footer>
+}
